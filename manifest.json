@@ -4,7 +4,7 @@
   "description": "Link copying functions",
   "version": "1.0",
   "action": {
-    "default_popup": "hello.html",
-    "default_icon": "hello_extensions.png"
+    "default_popup": "popup/popup.html",
+    "default_icon": "images/icon.png"
   }
 }
