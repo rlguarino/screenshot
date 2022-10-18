@@ -23,7 +23,7 @@ chrome.action.onClicked.addListener(async (tab) => {
 
     if (nextState === "ON") {
         console.log("now on!");
-      } else if (nextState === "OFF") {
+    } else if (nextState === "OFF") {
         console.log("now off");
-      }
+    }
 });
