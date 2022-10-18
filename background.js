@@ -26,4 +26,34 @@ chrome.action.onClicked.addListener(async (tab) => {
     } else if (nextState === "OFF") {
         console.log("now off");
     }
+    targets = await chrome.debugger.getTargets()
+
+    for (x in targets) {
+        if (targets[x].attached && targets[x].type == "page") {
+            console.log("found attached page!")
+            console.log(targets[x])
+            d = {tabId: targets[x].tabId};
+            chrome.debugger.attach(d, "1.3");
+            chrome.debugger.sendCommand(d, "Page.getLayoutMetrics", function (response) {
+                console.log(response)
+                chrome.debugger.sendCommand(d,"Page.captureScreenshot",
+                {
+                    format: "png",
+                    clip: {
+                        scale: 1,
+                        x: 0,
+                        y: 0,
+                        width: response.contentSize.width,
+                        height: response.contentSize.height
+                    },
+                    captureBeyondViewport: true,
+                    fromSurface: true
+                },
+                function(screenshotResponse) {
+                    console.log(screenshotResponse)
+                    chrome.debugger.detach(d)
+                });
+            });
+        }
+    }
 });
